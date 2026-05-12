@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>AI Chatbot</title>
+
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet">
+
+</head>
+
+<body class="bg-dark text-white">
+
+<nav class="navbar navbar-dark bg-black px-4">
+
+    <a class="navbar-brand" href="/">
+        🚦 Traffic AI
+    </a>
+
+</nav>
+
+<div class="container text-center mt-5">
+
+    <div class="card bg-secondary p-5">
+
+        <h1 class="mb-4">
+            🤖 AI Traffic Assistant
+        </h1>
+
+        <select id="language" class="form-control mb-3">
+
+            <option value="en-US">
+                English
+            </option>
+
+            <option value="hi-IN">
+                Hindi
+            </option>
+
+            <option value="ta-IN">
+                Tamil
+            </option>
+
+            <option value="te-IN">
+                Telugu
+            </option>
+
+        </select>
+
+        <input
+            type="text"
+            id="userInput"
+            class="form-control mb-4"
+            placeholder="Ask something..."
+        >
+
+        <button
+            class="btn btn-warning btn-lg mb-3"
+            onclick="reply()"
+        >
+            Send
+        </button>
+
+        <button
+            class="btn btn-info btn-lg"
+            onclick="startVoice()"
+        >
+            🎤 Speak
+        </button>
+
+        <h3 class="mt-4" id="response"></h3>
+
+    </div>
+
+</div>
+
+<script>
+
+function reply() {
+
+    let text =
+    document.getElementById("userInput")
+    .value.toLowerCase();
+
+    let response = "";
+
+    if(text.includes("fine")) {
+
+        response =
+        "Your violation fine is generated based on traffic rules.";
+    }
+
+    else if(text.includes("helmet")) {
+
+        response =
+        "Please wear helmet for your safety.";
+    }
+
+    else if(text.includes("signal")) {
+
+        response =
+        "Signal jumping is a punishable offense.";
+    }
+
+    else {
+
+        response =
+        "Please follow traffic rules carefully.";
+    }
+
+    document.getElementById("response")
+    .innerHTML = response;
+
+    let speech =
+    new SpeechSynthesisUtterance(response);
+
+    speech.lang =
+    document.getElementById("language").value;
+
+    speechSynthesis.speak(speech);
+}
+
+function startVoice() {
+
+    const recognition =
+    new webkitSpeechRecognition();
+
+    recognition.lang =
+    document.getElementById("language").value;
+
+    recognition.onresult =
+    function(event) {
+
+        document.getElementById("userInput")
+        .value =
+        event.results[0][0].transcript;
+
+        reply();
+    };
+
+    recognition.start();
+}
+
+</script>
+
+</body>
+</html>
