@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request
 import os
-from pyngrok import ngrok
 
 app = Flask(__name__)
 
@@ -59,8 +58,4 @@ def complaint():
     return render_template('complaint.html')
 
 if __name__ == '__main__':
-   public_url = ngrok.connect(5000)
-
-print("Public URL:", public_url)
-
-app.run(port=5000)
+    app.run(port=5000)
